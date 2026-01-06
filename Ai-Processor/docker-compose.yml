@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  fastapi-ml:
+    build: ./fastapi-ml-service
+    ports:
+      - "8000:8000"
+  dotnet-api:
+    build: ./FastApiOpenAiProcessor
+    ports:
+      - "5000:80"
+    depends_on:
+      - fastapi-ml

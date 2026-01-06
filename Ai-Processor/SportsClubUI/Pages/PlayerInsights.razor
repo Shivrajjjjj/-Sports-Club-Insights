@@ -1,0 +1,49 @@
+@page "/player-insights"
+@using SportsClubUI.Models
+@inject SportsClubUI.Services.ApiService ApiService
+<h3>Sports Club Insights</h3>
+
+<div class="form-group">
+    <label>Name:</label>
+    <input @bind="player.Name" class="form-control" />
+</div>
+<div class="form-group">
+    <label>Sport:</label>
+    <input @bind="player.Sport" class="form-control" />
+</div>
+<div class="form-group">
+    <label>Goals:</label>
+    <input type="number" @bind="player.Goals" class="form-control" />
+</div>
+<div class="form-group">
+    <label>Assists:</label>
+    <input type="number" @bind="player.Assists" class="form-control" />
+</div>
+<div class="form-group">
+    <label>Matches:</label>
+    <input type="number" @bind="player.Matches" class="form-control" />
+</div>
+
+<button class="btn btn-primary" @onclick="GenerateReport">Generate Report</button>
+
+@if (report != null)
+{
+    <h4>Summary</h4>
+    <p><b>Name:</b> @report.Name</p>
+    <p><b>Sport:</b> @report.Sport</p>
+    <p><b>Average Score:</b> @report.AverageScore</p>
+    <p><b>Highlight:</b> @report.Highlight</p>
+
+    <h4>AI Report</h4>
+    <p>@report.AIReport</p>
+}
+
+@code {
+    private PlayerStats player = new PlayerStats();
+    private PlayerReport? report;
+
+    private async Task GenerateReport()
+    {
+        report = await ApiService.GetPlayerReportAsync(player);
+    }
+}
