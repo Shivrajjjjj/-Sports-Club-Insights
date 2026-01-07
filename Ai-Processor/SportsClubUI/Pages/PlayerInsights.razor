@@ -1,0 +1,211 @@
+﻿@page "/player-insights"
+@using SportsClubUI.Models
+@inject SportsClubUI.Services.SportsApiService SportsApiService
+
+<style>
+    /* 1. Enhanced Cyber Background */
+    .dashboard-bg {
+        min-height: 100vh;
+        background: radial-gradient(circle at center, rgba(0, 114, 255, 0.1) 0%, rgba(10, 20, 30, 1) 100%), 
+                    url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=2000&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
+        padding: 30px;
+        font-family: 'Rajdhani', sans-serif; /* High-tech font */
+    }
+
+    /* 2. Cyber-Border Effect */
+    .cyber-card {
+        background: rgba(15, 25, 35, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        border-radius: 4px; /* Sharper corners for military/pro look */
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Neon corner accents */
+    .cyber-card::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 20px; height: 20px;
+        border-top: 3px solid #00f2fe;
+        border-left: 3px solid #00f2fe;
+    }
+
+    /* 3. High-Impact Typography */
+    .glitch-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 3rem;
+        letter-spacing: 4px;
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+        background: linear-gradient(to right, #00f2fe, #fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* 4. Powerful Metrics */
+    .metric-hero {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(to bottom, #fff, #00f2fe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 10px 20px rgba(0, 242, 254, 0.2);
+    }
+
+    /* 5. Animated Scanline Effect */
+    .scanline {
+        width: 100%;
+        height: 100px;
+        z-index: 10;
+        background: linear-gradient(0deg, rgba(0, 242, 254, 0) 0%, rgba(0, 242, 254, 0.1) 50%, rgba(0, 242, 254, 0) 100%);
+        opacity: 0.1;
+        position: absolute;
+        bottom: 100%;
+        animation: scanlineMove 4s linear infinite;
+    }
+
+    @@keyframes scanlineMove {
+        0% { bottom: 100%; }
+        100% { bottom: -100px; }
+    }
+
+    /* 6. Glowing Primary Button */
+    .btn-cyber {
+        background: #00f2fe;
+        color: #000;
+        font-weight: 900;
+        border: none;
+        clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        padding: 15px 40px;
+        transition: 0.3s;
+        text-transform: uppercase;
+    }
+
+    .btn-cyber:hover {
+        background: #fff;
+        box-shadow: 0 0 30px #00f2fe;
+        transform: skewX(-5deg);
+    }
+</style>
+
+<div class="dashboard-bg">
+    <div class="container-fluid">
+        <div class="row mb-5 align-items-end">
+            <div class="col-md-8">
+                <div class="text-info mb-0 small"><i class="fas fa-satellite-dish"></i> SAT-LINK ACTIVE // STADIUM SECTOR 7G</div>
+                <h1 class="glitch-title">ANALYTICS ENGINE</h1>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="cyber-card p-2 d-inline-block text-start" style="min-width: 200px">
+                    <div class="small opacity-50 text-uppercase">System Status</div>
+                    <div class="text-success fw-bold"><span class="pulse">●</span> OPTIMAL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-xl-3 col-lg-4">
+                <div class="cyber-card p-4 h-100">
+                    <h5 class="mb-4 text-info"><i class="fas fa-crosshairs"></i> DATA INPUT</h5>
+                    
+                    <div class="mb-4">
+                        <label class="small text-uppercase mb-2">NAME</label>
+                        <input class="form-control bg-dark text-white border-secondary" @bind="request.PlayerId" placeholder="NAME_ENTRY" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="small text-uppercase mb-2">SPORTS MODE</label>
+                        <select class="form-control bg-dark text-white border-secondary" @bind="request.Sport">
+                            <option>FOOTBALL</option>
+                            <option>BASKETBALL</option>
+                            <option>BASEBALL</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-cyber w-100 mt-3" @onclick="LoadInsights" disabled="@isLoading">
+                        @if (isLoading) { <span>ACQUIRING...</span> } else { <span>RUN DIAGNOSTIC</span> }
+                    </button>
+                    
+                    <div class="mt-5 opacity-25">
+                        <div class="small text-uppercase">Encrypted Stream: v8.4.2</div>
+                        <div class="small">LATENCY: 14ms</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-9 col-lg-8">
+                @if (response != null)
+                {
+                    <div class="cyber-card p-0 h-100">
+                        <div class="scanline"></div>
+                        <div class="p-4 border-bottom border-secondary d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0 text-uppercase">@response.Name <span class="h6 text-info">[@response.Sport]</span></h2>
+                            <div class="text-end">
+                                <div class="small text-uppercase opacity-50">Reliability</div>
+                                <div class="h4 mb-0 text-info">98.4%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-0">
+                            <div class="col-md-5 border-end border-secondary p-4">
+                                <div class="text-center py-4">
+                                    <div class="small text-uppercase opacity-50 mb-2">Performance Coefficient</div>
+                                    <div class="metric-hero">@response.AverageScore</div>
+                                    <div class="mt-3 text-info">PEAK EFFICIENCY REACHED</div>
+                                </div>
+                                <div class="p-3 bg-dark-50 rounded mt-3 border border-secondary">
+                                    <i class="fas fa-star text-warning"></i> <strong>KEY HIGHLIGHT:</strong><br/>
+                                    <span class="text-uppercase small">@response.Highlight</span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-7 p-4">
+                                <h6 class="text-info mb-4 text-uppercase"><i class="fas fa-brain"></i> Neural Intelligence Report</h6>
+                                <div class="p-4 bg-black rounded" style="font-family: 'Courier New', monospace; min-height: 200px; border-left: 4px solid #00f2fe;">
+                                    <p class="mb-0" style="color: #00f2fe; line-height: 1.8;">
+                                        > INITIALIZING ANALYSIS...<br/>
+                                        > ACCESSING HISTORICAL DATA...<br/>
+                                        > @response.AIReport<br/>
+                                        > END OF REPORT.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="cyber-card h-100 d-flex flex-column align-items-center justify-content-center p-5 opacity-50">
+                        <i class="fas fa-radar fa-spin fa-4x text-info mb-4"></i>
+                        <h2 class="text-uppercase fw-bold">System Idle</h2>
+                        <p>Awaiting subject designation for tactical overlay.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private FastApiRequest request = new();
+    private PlayerInsightResponse? response;
+    private bool isLoading = false;
+
+    private async Task LoadInsights()
+    {
+        if (string.IsNullOrWhiteSpace(request.PlayerId)) return;
+        isLoading = true;
+        response = null;
+        await Task.Delay(1200); // Simulate high-end processing
+        response = await SportsApiService.GetPlayerInsightsAsync(request);
+        isLoading = false;
+    }
+}

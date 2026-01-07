@@ -1,0 +1,110 @@
+﻿<style>
+    /* Sidebar styling to match Stadium HUD */
+    .nav-container {
+        background: rgba(5, 15, 25, 0.95);
+        backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(0, 242, 254, 0.2);
+        height: 100%;
+    }
+
+    .nav-brand-area {
+        background: linear-gradient(to right, rgba(0, 114, 255, 0.2), transparent);
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .brand-text {
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #00f2fe;
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        text-transform: uppercase;
+    }
+
+    .nav-link {
+        color: #a0aec0 !important;
+        margin: 5px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-family: 'Segoe UI', sans-serif;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    .nav-link:hover {
+        background: rgba(0, 242, 254, 0.1);
+        color: #fff !important;
+    }
+
+    .nav-link.active {
+        background: linear-gradient(45deg, rgba(0, 114, 255, 0.3), rgba(0, 242, 254, 0.3)) !important;
+        color: #00f2fe !important;
+        border-left: 3px solid #00f2fe;
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    .nav-icon {
+        width: 25px;
+        display: inline-block;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="top-row ps-3 navbar navbar-dark bg-dark d-md-none">
+    <div class="container-fluid">
+        <a class="navbar-brand brand-text" href="">🏟 CORE</a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable nav-container" @onclick="CollapseMenu">
+    <div class="nav-brand-area d-none d-md-block">
+        <a class="navbar-brand brand-text" href="">
+            <i class="fas fa-shield-alt me-2"></i> STADIUM CORE
+        </a>
+    </div>
+
+    <nav class="nav flex-column mt-3">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="fas fa-portal-exit nav-icon" aria-hidden="true"></span> ACCESS POINT
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="player-insights">
+                <span class="fas fa-crosshairs nav-icon" aria-hidden="true"></span> TARGET HUD
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="team-roster">
+                <span class="fas fa-users nav-icon" aria-hidden="true"></span> TACTICAL SQUAD
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="stadium-status">
+                <span class="fas fa-microchip nav-icon" aria-hidden="true"></span> CORE DIAGNOSTICS
+            </NavLink>
+        </div>
+    </nav>
+
+    <div class="position-absolute bottom-0 w-100 p-3 opacity-25 d-none d-md-block">
+        <div class="small text-uppercase" style="font-size: 0.6rem;">
+            Encrypt: AES-256<br />
+            Status: Secure
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : "show";
+
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
+    private void CollapseMenu() => collapseNavMenu = true;
+}

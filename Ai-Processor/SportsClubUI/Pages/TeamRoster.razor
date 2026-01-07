@@ -1,0 +1,80 @@
+@page "/team-roster"
+
+<style>
+    .tactical-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .player-chip {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        border-radius: 12px;
+        padding: 15px;
+        position: relative;
+        transition: 0.3s;
+    }
+
+    .player-chip:hover {
+        background: rgba(0, 242, 254, 0.1);
+        border-color: #00f2fe;
+    }
+
+    .status-dot {
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .status-active { background-color: #00ff88; box-shadow: 0 0 10px #00ff88; }
+</style>
+
+<div class="dashboard-bg">
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Active Roster</h2>
+            <p class="text-info">Biometric Link: Established</p>
+        </div>
+
+        <div class="tactical-grid">
+            @foreach (var player in players)
+            {
+                <div class="player-chip animate-fadein">
+                    <div class="d-flex justify-content-between">
+                        <span class="small opacity-50">#@player.Jersey</span>
+                        <span class="badge bg-dark">@player.Position</span>
+                    </div>
+                    <h5 class="mt-2 mb-1">@player.Name</h5>
+                    <div class="small text-info"><span class="status-dot status-active"></span>Tracking Active</div>
+                    
+                    <div class="mt-3 d-flex justify-content-between align-items-end">
+                        <div>
+                            <div class="small opacity-50">Heart Rate</div>
+                            <div class="fw-bold">@player.HeartRate BPM</div>
+                        </div>
+                        <a href="/player-insights" class="btn btn-sm btn-outline-info">View HUD</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Player> players = new() {
+        new Player { Name = "Marcus Kane", Jersey = "10", Position = "Forward", HeartRate = 142 },
+        new Player { Name = "Sarah Jenkins", Jersey = "04", Position = "Midfield", HeartRate = 138 },
+        new Player { Name = "Leo Vance", Jersey = "22", Position = "Defense", HeartRate = 115 }
+    };
+
+    public class Player {
+        public string Name { get; set; } = "";
+        public string Jersey { get; set; } = "";
+        public string Position { get; set; } = "";
+        public int HeartRate { get; set; }
+    }
+}

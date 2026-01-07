@@ -1,0 +1,134 @@
+/* Stadium Background */
+.dashboard-bg {
+    min-height: 100vh;
+    background: linear-gradient(rgba(10, 20, 30, 0.8), rgba(10, 20, 30, 0.9)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    padding: 20px;
+    color: #ffffff;
+}
+
+/* Glassmorphism Container */
+.container {
+    max-width: 1200px; /* Wider for a 'Command Center' feel */
+    margin: auto;
+}
+
+/* Header - Modern HUD style */
+.dashboard-header {
+    text-align: left;
+    margin-bottom: 40px;
+    border-left: 4px solid #00f2fe;
+    padding-left: 20px;
+}
+
+    .dashboard-header h2 {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+        margin: 0;
+        background: linear-gradient(to right, #fff, #00f2fe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+/* The Glass Card */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Input Fields */
+.form-control {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+    .form-control:focus {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: #00f2fe;
+        box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        color: #fff;
+    }
+
+/* Cyber Button */
+.btn-primary {
+    background: linear-gradient(45deg, #0072ff, #00c6ff);
+    border: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 12px 30px;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+}
+
+    .btn-primary:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
+    }
+
+/* Results Grid */
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.metric-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00f2fe;
+}
+
+.ai-report {
+    border-top: 1px solid rgba(0, 242, 254, 0.3);
+    padding-top: 20px;
+    font-family: 'Courier New', Courier, monospace; /* Digital feel */
+}
+
+/* Scanning Animation for Loading */
+.loading-scan {
+    height: 2px;
+    background: #00f2fe;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+    .loading-scan::after {
+        content: "";
+        display: block;
+        width: 50%;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0 0 15px #00f2fe;
+        animation: scan 1.5s infinite;
+    }
+
+@keyframes scan {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(200%);
+    }
+}

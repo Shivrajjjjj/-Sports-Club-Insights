@@ -1,0 +1,13 @@
+//fastapi-ml-service
+
+ cd C:\Users\shivr\source\repos\Ai-Processor
+ cd fastapi-ml-service
+ uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+//BLAZOR
+ cd C:\Users\shivr\source\repos\Ai-Processor
+ dotnet run --project SportsClubUI
+
+//API
+ cd FastApiOpenAiProcessor
+ dotnet run

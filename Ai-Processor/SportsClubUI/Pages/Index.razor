@@ -1,0 +1,125 @@
+﻿@page "/"
+
+<style>
+    .hero-wrapper {
+        min-height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(10, 20, 30, 0.9)), 
+                    url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2000&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .glass-portal {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 60px;
+        text-align: center;
+        max-width: 800px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        position: relative;
+    }
+
+    .glass-portal::before {
+        content: "";
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: linear-gradient(45deg, #00f2fe, transparent, #0072ff);
+        z-index: -1;
+        border-radius: 24px;
+        opacity: 0.3;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+        background: linear-gradient(to bottom, #fff 40%, #00f2fe);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1;
+    }
+
+    .hero-subtitle {
+        color: #a0aec0;
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        font-family: 'Courier New', monospace;
+    }
+
+    .btn-stadium {
+        background: #00f2fe;
+        color: #050a0f;
+        padding: 18px 45px;
+        border-radius: 50px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    }
+
+    .btn-stadium:hover {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 242, 254, 0.6);
+        color: #000;
+    }
+
+    /* Decorative HUD elements */
+    .hud-corner {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 2px solid #00f2fe;
+        opacity: 0.5;
+    }
+    .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+    .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+    /* Animations */
+    .fade-in { animation: fadeIn 1.2s ease-out; }
+    .slide-up { animation: slideUp 1s ease-out 0.3s both; }
+
+    @@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @@keyframes slideUp { 
+        from { opacity: 0; transform: translateY(30px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+</style>
+
+<div class="hero-wrapper">
+    <div class="glass-portal fade-in">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner bottom-right"></div>
+
+        <h1 class="hero-title">STADIUM<br/>INSIGHTS</h1>
+
+        <p class="hero-subtitle slide-up">
+            > INITIALIZING NEURAL NETWORK...<br/>
+            > LINKING LIVE STADIUM FEEDS...<br/>
+            AI-powered sports analytics for professional scouts and coaches.
+        </p>
+
+        <div class="slide-up">
+            <a class="btn-stadium" href="/player-insights">
+                Enter Command Center
+            </a>
+        </div>
+
+        <div class="mt-5 opacity-50 small slide-up" style="font-family: monospace;">
+            STADIUM ANALYTICS CORE v3.1.0-READY
+        </div>
+    </div>
+</div>
